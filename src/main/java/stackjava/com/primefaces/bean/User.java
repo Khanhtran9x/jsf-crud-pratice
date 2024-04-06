@@ -11,14 +11,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-@ManagedBean @RequestScoped public class User {
+@ManagedBean
+@RequestScoped
+public class User {
 	int id;
 	String name;
 	String email;
 	String password;
 	String gender;
 	String address;
-	String searchValue;
 
 	ArrayList usersList;
 	private Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -70,14 +71,6 @@ import javax.faces.context.FacesContext;
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getSearchValue() {
-		return searchValue;
-	}
-
-	public void setSearchValue(String searchValue) {
-		this.searchValue = searchValue;
 	}
 
 	// Used to establish connection
@@ -212,7 +205,7 @@ import javax.faces.context.FacesContext;
 			usersList = new ArrayList();
 			connection = getConnection();
 			PreparedStatement stmt = connection.prepareStatement("select * from users where name = ?");
-			stmt.setString(1, searchValue);
+			stmt.setString(1, name);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				User user = new User();

@@ -28,7 +28,7 @@
 		<center>
 			<h2><h:outputText value="User Records"/></h2>
 		</center>
-		<h:inputText value="#{user.searchValue}"/>
+		<h:inputText value="#{user.name}"/>
 		<h:commandButton value="Search" action="#{user.searchUser()}" class="btn btn-success"></h:commandButton>
 		<h:dataTable binding="#{table}" value="#{user.usersList()}" var="u"
 					 class="table table-striped table-hover table-bordered">
