@@ -1,5 +1,7 @@
 package stackjava.com.primefaces.bean;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +9,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -88,6 +91,9 @@ public class User {
 
 	// Used to fetch all records
 	public ArrayList usersList() {
+		if (Objects.nonNull(usersList)) {
+			return usersList;
+		}
 		try {
 			usersList = new ArrayList();
 			connection = getConnection();
@@ -204,8 +210,8 @@ public class User {
 		try {
 			usersList = new ArrayList();
 			connection = getConnection();
-			PreparedStatement stmt = connection.prepareStatement("select * from users where name = ?");
-			stmt.setString(1, name);
+			PreparedStatement stmt = connection.prepareStatement("select * from users where name like ?");
+			stmt.setString(1, "%" + name + "%");
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				User user = new User();
